@@ -22,10 +22,10 @@ elif arg_len >=2:
 
 def downloadImage(imageUrl, localFile, subreddit):
 	response = requests.get(imageUrl, stream = True)
-	dirname = 'Wallpaper/%s/'%(subreddit)
+	dirname = '%s/'%(subreddit)
 	localFile = dirname+localFile
 	if response.status_code == 200:
-		print('Downloading %s...'%(localFile))
+		print('Downloading %s to %s....'%(localFile, subreddit))
 		try:
 			os.makedirs(dirname)
 		except OSError:
@@ -36,12 +36,6 @@ def downloadImage(imageUrl, localFile, subreddit):
 			else:
 				print ("Error")	
 
-
-
-
-
-
-
 # Connect to reddit
 user_agent = "Reddit Image Downloads 1.0 by /u/banglatoker"
 r = praw.Reddit(user_agent = user_agent)
@@ -49,7 +43,7 @@ r = praw.Reddit(user_agent = user_agent)
 # going through subreddits
 # Only looking at top 25 results from a week
 for subreddits in subreddit_list:
-	submissions = r.get_subreddit(subreddits).get_top_from_week(limit = 20)
+	submissions = r.get_subreddit(subreddits).get_top_from_week(limit = 25)
 	for wallpaper in submissions:
 		# Checking if conditions are met
 		if "imgur.com/" not in wallpaper.url:
