@@ -10,7 +10,7 @@ albumLink = "http://imgur.com/a/"
 imageLink = "http://i.imgur.com/"
 normLink  = "http://imgur.com/gallery/"
 imageURLPattern = re.compile(r'(http://i.imgur.com/(.*))(\?.*)?')
-
+subreddit_list = []
 if arg_len < 2: 
 	# No argument passed, download from default subreddits
 	subreddit_list = ['earthporn']
@@ -20,14 +20,21 @@ elif arg_len >=2:
 		MIN_KARMA = sys.argv[2]
 
 
-def downloadImage(imageUrl, localFile):
+def downloadImage(imageUrl, localFile, subreddit):
 	response = requests.get(imageUrl, stream = True)
+	dirname = 'Wallpaper/%s/'%(subreddit)
+	localFile = dirname+localFile
 	if response.status_code == 200:
 		print('Downloading %s...'%(localFile))
-		with open(localFile, 'wb') as f:
-			for chunk in response.iter_content(4096):
-				f.write(chunk)
-			
+		try:
+			os.makedirs(dirname)
+		except OSError:
+			if os.path.isdir(dirname):
+				with open(localFile, 'wb') as f:
+					for chunk in response.iter_content(4096):
+						f.write(chunk)
+			else:
+				print ("Error")	
 
 
 
@@ -62,13 +69,13 @@ for subreddits in subreddit_list:
 				imageUrl = match['src']
 				imageFile = imageUrl[imageUrl.rfind('/') +1:]
 			localFile = 'reddit%s_%s_album_%s_imgur_%s'%(subreddits, wallpaper.id, albumID, imageFile)
-			downloadImage(wallpaper.url, localFile)
+			downloadImage(wallpaper.url, localFile, subreddits)
 
 		elif imageLink in wallpaper.url:
 			mo = imageURLPattern.search(wallpaper.url)
 			imageFile = mo.group(2)
 			localFile = 'reddit%s_%s_album_None_imgur_%s'%(subreddits, wallpaper.id, imageFile)
-			downloadImage(wallpaper.url, localFile)
+			downloadImage(wallpaper.url, localFile, subreddits)
 
 		elif normLink in wallpaper.url:
 			htmlSource = requests.get(wallpaper.url).text
@@ -78,6 +85,6 @@ for subreddits in subreddit_list:
 				imageUrl = match['src']
 				imageFile = imageUrl[imageUrl.rfind('/') + 1:]
 			localFile = 'reddit%s_%s_album_None_imgur_%s'%(subreddits, wallpaper.id, imageFile)
-			downloadImage(wallpaper.url, localFile)
+			downloadImage(wallpaper.url, localFile, subreddits)
 
 
