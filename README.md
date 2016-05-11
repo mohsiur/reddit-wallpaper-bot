@@ -4,9 +4,9 @@ A Reddit bot to download wallpapers/images from various subreddits
 ## Usage
 
 * Clone repository 
-	'git clone http://github.com/mohsiur/reddit-wallpaper-bot'
+`git clone http://github.com/mohsiur/reddit-wallpaper-bot`
 * In Terminal run the following script
-	'python wallpaperbot.py [subreddit] [filters] [MIN_KARMA]'
+`python wallpaperbot.py [subreddit] [filters] [MIN_KARMA]`
 	* 0 = Hot (Default)
 	* 1 = All 
 	* 2 = Year
