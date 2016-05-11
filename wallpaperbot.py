@@ -1,11 +1,12 @@
 import re, praw, requests, os, glob, sys, urllib
 from bs4 import BeautifulSoup
 
-MIN_KARMA = 500 #default minimum reddit karma
+MIN_KARMA = 250 #default minimum reddit karma
 
 # Running the script with arguments
 
 arg_len = len(sys.argv)
+filters = 0 # 0 = hot 1 = all 2 = By year 3 = By month 4 = week 5 = day 6 = hour
 albumLink = "http://imgur.com/a/"
 imageLink = "http://i.imgur.com/"
 normLink  = "http://imgur.com/gallery/"
@@ -16,9 +17,10 @@ if arg_len < 2:
 	subreddit_list = ['earthporn']
 elif arg_len >=2:
 	subreddit_list.append(sys.argv[1])
-	if arg_len >=3:
-		MIN_KARMA = sys.argv[2]
-
+	if arg_len ==3:
+		filters = int(sys.argv[2])
+	elif arg_len > 3:
+		MIN_KARMA = int(sys.argv[3])
 
 def downloadImage(imageUrl, localFile, subreddit):
 	response = requests.get(imageUrl, stream = True)
@@ -43,7 +45,22 @@ r = praw.Reddit(user_agent = user_agent)
 # going through subreddits
 # Only looking at top 25 results from a week
 for subreddits in subreddit_list:
-	submissions = r.get_subreddit(subreddits).get_top_from_week(limit = 25)
+	if filters == 0: 
+		submissions = r.get_subreddit(subreddits).get_hot(limit = 100)
+	elif filters == 1: 
+		submissions = r.get_subreddit(subreddits).get_top_from_all(limit = 100)
+	elif filters == 2:
+		submissions = r.get_subreddit(subreddits).get_top_from_year(limit = 100)
+	elif filters == 3:
+		submissions = r.get_subreddit(subreddits).get_top_from_month(limit = 100)
+	elif filters == 4:
+		submissions = r.get_subreddit(subreddits).get_top_from_week(limit = 100)
+	elif filters == 5:
+		submissions = r.get_subreddit(subreddits).get_top_from_day(limit = 100)
+	
+	elif filters == 6:
+		submissions = r.get_subreddit(subreddits).get_top_from_hour(limit = 100)
+
 	for wallpaper in submissions:
 		# Checking if conditions are met
 		if "imgur.com/" not in wallpaper.url:
@@ -80,5 +97,3 @@ for subreddits in subreddit_list:
 				imageFile = imageUrl[imageUrl.rfind('/') + 1:]
 			localFile = 'reddit%s_%s_album_None_imgur_%s'%(subreddits, wallpaper.id, imageFile)
 			downloadImage(wallpaper.url, localFile, subreddits)
-
-
