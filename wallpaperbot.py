@@ -12,6 +12,7 @@ imageLink = "http://i.imgur.com/"
 normLink  = "http://imgur.com/gallery/"
 imageURLPattern = re.compile(r'(http://i.imgur.com/(.*))(\?.*)?')
 subreddit_list = []
+
 if arg_len < 2: 
 	# No argument passed, download from default subreddits
 	subreddit_list = ['earthporn']

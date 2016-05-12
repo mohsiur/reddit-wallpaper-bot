@@ -21,3 +21,9 @@ A Reddit bot to download wallpapers/images from various subreddits
 * 6 = Hour
 
 If no arguments passed default is downloads hottest 100 with 250+ Karma from /r/earthporn
+
+#### Features to be added
+* A text file containing filters, subreddits ad karma values so that only the file needs to be updated and not the code
+* Schedule with cron
+* Make a GUI
+* Clean up code
