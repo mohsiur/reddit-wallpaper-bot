@@ -79,8 +79,8 @@ for subreddits in subreddit_list:
 			for match in matches:
 				imageUrl = match['src']
 				imageFile = imageUrl[imageUrl.rfind('/') +1:]
-			localFile = 'reddit%s_%s_album_%s_imgur_%s'%(subreddits, wallpaper.id, albumID, imageFile)
-			downloadImage(wallpaper.url, localFile, subreddits)
+				localFile = 'reddit%s_%s_album_%s_imgur_%s'%(subreddits, wallpaper.id, albumID, imageFile)
+				downloadImage(imageUrl, localFile, subreddits)
 
 		elif imageLink in wallpaper.url:
 			mo = imageURLPattern.search(wallpaper.url)
