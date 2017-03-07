@@ -41,26 +41,30 @@ def downloadImage(imageUrl, localFile, subreddit):
 
 # Connect to reddit
 user_agent = "Reddit Image Downloads 1.0 by /u/banglatoker"
-r = praw.Reddit(user_agent = user_agent)
+clientId = '4IhD1FlhQfN9Uw'
+clientSecret = 'vCZ2NuJfBaWpwqcJV89IPBbrUz0'
+r = praw.Reddit(client_id = clientId,
+		client_secret = clientSecret,
+		user_agent=user_agent)
 
 # going through subreddits
 # Only looking at top 25 results from a week
 for subreddits in subreddit_list:
 	if filters == 0: 
-		submissions = r.get_subreddit(subreddits).get_hot(limit = 100)
+		submissions = r.subreddit(subreddits).hot()
 	elif filters == 1: 
-		submissions = r.get_subreddit(subreddits).get_top_from_all(limit = 100)
+		submissions = r.subreddit(subreddits).top('all')
 	elif filters == 2:
-		submissions = r.get_subreddit(subreddits).get_top_from_year(limit = 100)
+		submissions = r.subreddit(subreddits).top('year')
 	elif filters == 3:
-		submissions = r.get_subreddit(subreddits).get_top_from_month(limit = 100)
+		submissions = r.subreddit(subreddits).top('month')
 	elif filters == 4:
-		submissions = r.get_subreddit(subreddits).get_top_from_week(limit = 100)
+		submissions = r.subreddit(subreddits).top('week')
 	elif filters == 5:
-		submissions = r.get_subreddit(subreddits).get_top_from_day(limit = 100)
+		submissions = r.subreddit(subreddits).top('day')
 	
 	elif filters == 6:
-		submissions = r.get_subreddit(subreddits).get_top_from_hour(limit = 100)
+		submissions = r.subreddit(subreddits).top('hour')
 
 	for wallpaper in submissions:
 		# Checking if conditions are met
