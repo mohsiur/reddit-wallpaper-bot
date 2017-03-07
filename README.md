@@ -1,5 +1,9 @@
 # reddit-wallpaper-bot
+
+[![Build Status](https://travis-ci.org/mohsiur/reddit-wallpaper-bot.svg?branch=master)](https://travis-ci.org/mohsiur/reddit-wallpaper-bot)
+
 A Reddit bot to download wallpapers/images from various subreddits
+
 
 ## Usage
 
