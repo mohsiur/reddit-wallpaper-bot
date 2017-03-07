@@ -1,5 +1,4 @@
 import re, praw, requests, os, glob, sys, urllib
-from bs4 import BeautifulSoup
 
 # Public variables
 MIN_KARMA = 250 #default minimum reddit karma
