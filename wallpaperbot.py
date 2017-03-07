@@ -74,7 +74,7 @@ def getWallpapers(submissions, subreddits):
 				continue
 			if wallpaper.score < MIN_KARMA:
 				continue
-			if glob.glob('reddit_%s_%s.jpg'%(subreddit, wallpaper.id)) > 0:
+			if len(glob.glob('reddit_%s_%s.jpg'%(subreddit, wallpaper.id))) > 0:
 				print("Wallpaper already exists")
 				continue
 			imageUrl  = wallpaper.url
